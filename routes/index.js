@@ -3,6 +3,7 @@
 const routes = require('express').Router();
 
 const User = require('../models/users');
+const Inventory = require('../models/inventory')
 
 // Let's create some routes...
 const login = require('./login/index')
@@ -37,14 +38,6 @@ routes.get('/login', async (req, res) => {
     })
 });
 
-routes.get('/dashboard', async (req, res) => {
-    res.render('dashboard', {
-        locals: {
-            // email: '',
-            // message: ''
-        }
-    })
-});
 
 
 routes.post('/login', async (req, res) => {
@@ -53,7 +46,7 @@ routes.post('/login', async (req, res) => {
     console.log(`request is ${req.body}`);
     // res.send('No soup for you');
     // TO-DO: Check password for real. :)
-
+    
     const theUser = await User.getByEmail(req.body.email);
     console.log(theUser)
     theUser.setPassword("password");
@@ -75,6 +68,19 @@ routes.post('/login', async (req, res) => {
             }
         });
     }
+});
+
+routes.get('/dashboard', async (req, res) => {
+    const theInventory = await Inventory.getAll();
+    const theUser = await User.getById(req.session.user);
+    console.log(req.session.user)
+    // await theUser.save();
+    res.render('dashboard', {
+        locals: {
+            firstName: theUser.firstName,
+            inventory: theInventory
+        }
+    });
 });
 
 
