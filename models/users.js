@@ -17,6 +17,22 @@ class User {
 
     // static means that function in something
     // the class can do, but an instance cannot. 
+
+
+
+    static getByEmail(email) {
+        return db.one(`select * from users where email=$1`, [email])
+            .then(userData => {
+                const userInstance = new User(userData.id, 
+                    userData.first_name,
+                    userData.last_name,
+                    userData.email,
+                    userData.password
+                   );
+                   console.log(userInstance)
+                return userInstance;
+            });
+     }
     static getById(id) {
         // .any always return an array
         // Instead, we'll use .one 
@@ -39,7 +55,6 @@ class User {
     }
 
     // a user can post an item from the inventory
-    static 
 
 
 
