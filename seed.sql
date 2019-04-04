@@ -8,7 +8,7 @@ values
 ;
 
 insert into inventory 
-    (item_name, category, price, content);
+    (item_name, category, price, content)
 values 
     ('Beats Headphones', 'Electronics', '$299', 'Like new!'),
     ('Cat Food', 'Pet Supplies', '$10', 'Organic, glutenfree.'),
@@ -19,17 +19,17 @@ values
 ;
 
 insert into cart 
-    (user_id, inventory_id);
+    (user_id, inventory_id)
 values 
     (2, 1),
     (3, 2),
     (2, 3),
     (1, 6),
     (1, 4),
-    (4, 2),
+    (4, 2)
 ;
 
 insert into claimed
-    (user_id, inventory_id);
+    (user_id, inventory_id)
 values
-    ();
+    (1,1);

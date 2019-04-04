@@ -33,6 +33,7 @@ class User {
     static getAll() {
         return db.any(` select * from users`)
         .then((arrayOfUsers) => {
+            console.log(arrayOfUsers);
             return arrayOfUsers
         })
     }
@@ -72,9 +73,8 @@ class User {
         where id=${this.id}
         `)
     }
-
 }
 
-
+User.getAll();
 // export my User model
 module.exports = User; 

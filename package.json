@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
+    "db:init": "psql -f schema.sql freEbay && psql -f seed.sql freEbay",
+    "db:create": "createdb freEbay",
+    "db:destroy": "dropdb freEbay",
+    "db:reset": "npm run db:destroy; npm run db:create && npm run db:init",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +22,7 @@
   },
   "homepage": "https://github.com/9juanjuan/freEbay-Backend-Project#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
     "express-es6-template-engine": "^2.1.7",
     "pg-promise": "^8.6.4"
