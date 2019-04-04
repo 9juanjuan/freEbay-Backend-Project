@@ -17,11 +17,11 @@ create table inventory (
 create table cart (
     id serial primary key,
     user_id integer references users(id),
-    inventory_id integer references inventory(id),
+    inventory_id integer references inventory(id)
 );
 
 create table claimed (
     id serial primary key,
     user_id integer references users(id),
-    inventory_id integer references inventory(id),
+    inventory_id integer references inventory(id)
 );
