@@ -27,10 +27,21 @@ class Inventory {
 
 
     static getAll() {
-        return db.any(` select * from users`)
-        .then((arrayOfUsers) => {
-            return arrayOfUsers
-        })
+        return db.any(`select * from inventory`)
+            .then((arrayOfInventory) => {
+                return arrayOfInventory.map((inventoryData) => {
+                    // console.log(reviewData);
+                    const anItem = new Inventory(
+                        inventoryData.id,
+                        inventoryData.item_name,
+                        inventoryData.category,
+                        inventoryData.price,
+                        inventoryData.content
+                    );
+                    // console.log(aInventory);
+                    return anItem;
+                });
+            });
     } 
 
 
