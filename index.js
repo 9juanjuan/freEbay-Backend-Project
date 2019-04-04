@@ -5,6 +5,9 @@ const es6Renderer= require('express-es6-template-engine');
 //This module lets express track users as they go from page to page.
 const session = require('express-session');
 
+const routes = require('./routes');
+app.use('/', routes);
+
 //Import the session storage module, and wire it up to the session module
 const FileStore = require('session-file-store')(session);
 
@@ -16,7 +19,7 @@ app.use(session({
 
 const port = 3000;
 const Inventory = require('./models/inventory');
-const User = require('./models/user');
+const User = require('./models/users');
 const Claimed= require('./models/claimed');
 const Cart = require ('./models/cart')
 
@@ -25,27 +28,18 @@ app.set('views', 'views');
 app.set('view engine', 'html')// tell express to use as its view engine the thing that speaks html
 // Second argument is the directory name
 
-//Configure express to use the built in middleware 
+// Configure express to use the built in middleware 
 // that can deal with form data.
 app.use(express.urlencoded({extended:true}));
 
 
 // Import my model class
-app.get('/login', async (req , res) => {
-});
-    // res.send('this is the login form');
+// app.get('/login', async (req , res) => {
+//     res.send('this is the login form');
+// });
 // require my session and session storage modules
 // This module lets express track users
 // as they go from page to page.
-const session = require('express-session');
-
-// Import the session storage module, and wire it up
-// to the session module.
-const FileStore = require('session-file-store')(session);
-
-
-
-
 
 
 app.listen(port, () => {

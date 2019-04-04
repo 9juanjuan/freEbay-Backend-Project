@@ -75,6 +75,6 @@ class User {
     }
 }
 
-User.getAll();
+// User.getAll();
 // export my User model
 module.exports = User; 
