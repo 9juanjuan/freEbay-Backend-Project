@@ -18,18 +18,23 @@ values
     ('Backend Development for Dummies', 'Books', '$25', 'You will learn soooo much!')
 ;
 
-insert into cart 
-    (user_id, inventory_id)
-values 
-    (2, 1),
-    (3, 2),
-    (2, 3),
-    (1, 6),
-    (1, 4),
-    (4, 2)
-;
+-- insert into cart 
+--     (user_id, inventory_id)
+-- values 
+--     (2, 1),
+--     (3, 2),
+--     (2, 3),
+--     (1, 6),
+--     (1, 4),
+--     (4, 2)
+-- ;
 
 insert into claimed
     (user_id, inventory_id)
 values
     (1,1);
+
+insert into selling
+    (item_name, category, content)
+values
+    ('testing','testing', 'testing')
