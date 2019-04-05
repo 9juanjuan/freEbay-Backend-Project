@@ -4,6 +4,7 @@ const routes = require('express').Router();
 
 const User = require('../models/users');
 const Inventory = require('../models/inventory')
+const Selling = require('../models/selling')
 
 // Let's create some routes...
 const login = require('./login/index')
@@ -73,15 +74,44 @@ routes.post('/login', async (req, res) => {
 routes.get('/dashboard', async (req, res) => {
     const theInventory = await Inventory.getAll();
     const theUser = await User.getById(req.session.user);
+    const sellingArray = await Selling.getAll();
+    // const sellingArray = await Selling.getAll();
+
     console.log(req.session.user)
     // await theUser.save();
     res.render('dashboard', {
         locals: {
             firstName: theUser.firstName,
-            inventory: theInventory
+            inventory: theInventory,
+            item:sellingArray
         }
     });
 });
+
+routes.post('/dashboard', async (req, res) => {
+    const theInventory = await Inventory.getAll();
+    const theUser = await User.getById(req.session.user);
+    await Selling.postNewItem(req.body.itemName, req.body.category, req.body.content);
+    const selling = new Selling(1, req.body.itemName, req.body.category, req.body.content)
+    const sellingArray = await Selling.getAll();
+    console.log(sellingArray)
+    // sellingArray.forEach(post => {
+    //     return
+    // });
+    console.log(sellingArray);
+    if (selling) {
+        res.render('dashboard', {
+            locals: {
+                firstName: theUser.firstName,
+                inventory: theInventory,
+                item: sellingArray
+            }
+        });
+        } else {
+            res.send('failure');
+        }
+});
+
 
 
 const controller = require('../models/controller')

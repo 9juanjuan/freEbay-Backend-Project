@@ -22,7 +22,7 @@ const port = 3000;
 const Inventory = require('./models/inventory');
 const User = require('./models/users');
 const Claimed= require('./models/claimed');
-const Cart = require ('./models/cart')
+const Selling = require ('./models/selling')
 
 app.engine('html', es6Renderer); // introduce express to es6renderer, speaks html
 app.set('views', 'views');
