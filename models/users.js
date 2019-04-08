@@ -59,7 +59,6 @@ class User {
 
 
 
-
     setPassword(newPassword) {
         const salt = bcrypt.genSaltSync(10); 
         const hash = bcrypt.hashSync(newPassword, salt);

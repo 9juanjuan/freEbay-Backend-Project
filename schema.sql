@@ -21,9 +21,11 @@ create table inventory (
 -- );
 
 create table claimed (
-    id serial primary key,
-    user_id integer references users(id),
-    inventory_id integer references inventory(id)
+     id serial primary key,
+    item_name varchar(200),
+    category varchar(200),
+    price varchar(200),
+    content text
 );
 
 create table selling (
