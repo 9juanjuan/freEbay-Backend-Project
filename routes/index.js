@@ -5,10 +5,12 @@ const routes = require('express').Router();
 const User = require('../models/users');
 const Inventory = require('../models/inventory')
 const Selling = require('../models/selling')
+const Claimed = require('../models/claimed')
 
 // Let's create some routes...
 const login = require('./login/index')
 const dashboard = require('./dashboard/index')
+const claimer = require('./claimed/index')
 // const users = require('./users');
 // const inventory = require('./inventory');
 // const cart = require('./cart');
@@ -18,6 +20,7 @@ const dashboard = require('./dashboard/index')
 // // Let's define some routes and their associated handlers...
 routes.use('/login', login);
 routes.use('/dashboard', dashboard)
+routes.use('/claimed', claimer)
 // routes.use('/login', users);
 // routes.use('/dashboard', inventory);
 // routes.use('/posted', cart)
@@ -40,19 +43,19 @@ routes.get('/login', async (req, res) => {
 });
 
 
+const escapeHtml= require('../utils')
 
 routes.post('/login', async (req, res) => {
-    // console.log(req.body.email);
-    console.log(req)
-    console.log(`request is ${req.body}`);
-    // res.send('No soup for you');
     // TO-DO: Check password for real. :)
     
-    const theUser = await User.getByEmail(req.body.email);
+    const theEmail= escapeHtml(req.body.email);
+    const thePassword = escapeHtml(req.body.password);
+
+    const theUser = await User.getByEmail(theEmail);
     console.log(theUser)
     theUser.setPassword("password");
     await theUser.save();
-    const passwordIsCorrect = theUser.checkPassword(req.body.password);
+    const passwordIsCorrect = theUser.checkPassword(thePassword);
     if (passwordIsCorrect) {
         // Save the user's id to the session.
         req.session.user = theUser.id;
@@ -77,7 +80,7 @@ routes.get('/dashboard', async (req, res) => {
     const sellingArray = await Selling.getAll();
     // const sellingArray = await Selling.getAll();
 
-    console.log(req.session.user)
+    // console.log(req.session.user)
     // await theUser.save();
     res.render('dashboard', {
         locals: {
@@ -94,11 +97,14 @@ routes.post('/dashboard', async (req, res) => {
     await Selling.postNewItem(req.body.itemName, req.body.category, req.body.content);
     const selling = new Selling(1, req.body.itemName, req.body.category, req.body.content)
     const sellingArray = await Selling.getAll();
-    console.log(sellingArray)
+    // console.log(sellingArray)
     // sellingArray.forEach(post => {
     //     return
     // });
-    console.log(sellingArray);
+    // console.log(sellingArray);
+
+
+
     if (selling) {
         res.render('dashboard', {
             locals: {
@@ -108,10 +114,57 @@ routes.post('/dashboard', async (req, res) => {
             }
         });
         } else {
-            res.send('failure');
+            res.send('failure')
         }
 });
 
+routes.get('/dashboard'), async (req,res) => {
+    // console.log(req.body);
+    console.log(req.body.id);
+    console.log('00000000000000000000000000000')
+    // const theInventory = await Inventory.getAll();
+    // const theUser = await User.getById(req.session.user);
+    // const sellingArray = await Selling.getAll();
+    
+res.redirect('/claimed')
+    // res.send('holy molee')
+    // res.render('claimed', {
+    //     locals: {
+    // //         item:sellingArray
+
+    //     }
+    // })
+
+
+
+}
+
+
+// routes.post('/claimed', async (req, res) => {
+//     console.log('kdfjfrjfjifroifofjorjofjfijfi')
+//     // console.log(req)
+//     console.log(req.body.id)
+//     console.log('121111111111111111111111111111')
+//     const claim = await Inventory.getOne(req.body.id)
+//     console.log(claim)
+//     console.log('kdfjfrjfjifroifofjorjofjfijfi')
+
+//     claim.claimed(req.body.itemName, req.body.category, req.body.price, this.content)
+//     const claimIt = new Claimed(1, req.body.itemName, req.body.category, req.body.price, req.body.content)
+//     console.log(claimIt)
+//     console.log('kdfjfrjfjifroifofjorjofjfijfi')
+
+//     const claimedInventory = await claimIt.getAll()
+// res.send('yeah you did')
+//     // res.render('/claimed', {
+//     //     inventory: claimedInventory
+
+
+//     // })
+
+
+
+// })
 
 
 const controller = require('../models/controller')

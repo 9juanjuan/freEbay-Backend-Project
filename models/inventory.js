@@ -11,8 +11,8 @@ class Inventory {
         this.content= content
     }
 
-    static getOne() {
-        return db.one(` select * from inventory where id= ${this.id}`)
+    static getOne(id) {
+        return db.one(` select * from inventory where id= ${id}`)
         .then((oneItem) => {
             const anItem = new Inventory(
                 oneItem.id,
@@ -43,7 +43,10 @@ class Inventory {
                 });
             });
     } 
-
+    static claimed(itemName, category, price, content) {
+        return db.none(`insert into claimed (item_name, category, price, content)
+                        values ('${itemName}', '${category}', '${price}','${content})`)
+    }
 
 
 }

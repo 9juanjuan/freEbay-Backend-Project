@@ -14,7 +14,10 @@
     <h3> Welcome back, ${firstName}</h3>
 
     <h4>Items for Sale</h4>
-
+    <form
+    action="/claimed" 
+    method="GET"
+    >
     <table class="table table-hover">
         <thead>
           <tr>
@@ -30,20 +33,18 @@
           ${
             inventory.map((item) => {
               return `
+              
               <tr>
+                
                   <th scope="row">${item.id}</th>
         
                   <td>${item.itemName}</td>
                   <td>${item.category}</td>
                   <td>${item.price}</td>
                   <td>
-                  <form
-                  action="/dashboard" 
-                  method="DELETE"
-                  >
+                 
                       <button type="submit" class="btn btn-primary">Click to claim</button>
-                  </form>
-                  </td>
+                    </td>
                 </tr>
               
               `
@@ -53,6 +54,7 @@
           
         </tbody>
       </table>
+      </form>
 
       <h4>Post Items For Sale</h4>
 

@@ -29,10 +29,11 @@ values
 --     (4, 2)
 -- ;
 
-insert into claimed
-    (user_id, inventory_id)
+insert into claimed 
+    (item_name, category, price, content)
 values
-    (1,1);
+    ('testing','testing','testing','testing'),
+    ('testing2', 'testin2', 'testin4', 'testin');
 
 insert into selling
     (item_name, category, content)
